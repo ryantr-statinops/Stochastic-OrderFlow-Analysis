@@ -2,7 +2,16 @@ import pandas as pd
 import numpy as np
 import os
 import datetime as datatime
-## from sklearn.model_selection import train_test_split
+
+
+def setup_folders():
+    # Danh sách các thư mục cần thiết cho dự án
+    folders = ['data/raw', 'data/processed']
+    
+    for folder in folders:
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+            print(f"--- Đã tạo thư mục: {folder} ---")
 
 def generate_factory_data(factory_name, lam, start_year = 2016, end_year = 2018,):
     date_range = pd.date_range(start =f'{start_year}-01-01', end = f'{end_year}-12-31 23:00:00', freq = 'H')
@@ -30,6 +39,7 @@ def generate_factory_data(factory_name, lam, start_year = 2016, end_year = 2018,
     print(f"--- Đã tạo xong dữ liệu cho {factory_name} tại {file_path} ---")
 
 # THỰC THI: Tạo 3 nhà máy với đặc tính thống kê khác nhau
+setup_folders()
 # Factory A: Ổn định (5 đơn/giờ)
 generate_factory_data("Factory_A", lam=50)
 

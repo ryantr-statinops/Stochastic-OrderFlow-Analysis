@@ -1,0 +1,45 @@
+# ========= Python =========
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Python tooling / caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.cache/
+
+# Coverage / test reports
+.coverage
+coverage.xml
+htmlcov/
+
+# ========= Data / artifacts =========
+# Chặn toàn bộ file trong thư mục raw nhưng loại trừ file .gitkeep
+data/raw/*
+!data/raw/.gitkeep
+
+# Chặn toàn bộ file trong thư mục processed nhưng loại trừ file .gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# ========= Logs =========
+*.log
+logs/
+
+# ========= IDE / OS =========
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# ========= Jupyter (nếu có) =========
+.ipynb_checkpoints/
+
+

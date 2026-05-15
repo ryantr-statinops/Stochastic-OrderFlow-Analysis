@@ -52,7 +52,7 @@ def export_report(summary_df, file_name='data/processed/final_report.md'):
     """Tạo báo cáo dưới dạng file Markdown để lưu trữ"""
     with open(file_name, 'w', encoding='utf-8') as f:
         f.write("# BÁO CÁO PHÂN TÍCH QUÁ TRÌNH NGẪU NHIÊN (SOFA)\n\n")
-        f.write(f"Ngày lập báo cáo: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+        f.write(f"Ngày ghi nhận dữ liệu: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
         f.write("## 1. Bảng tóm tắt chỉ số các nhà máy\n")
         f.write(summary_df.to_markdown(index=False))
         f.write("\n\n## 2. Nhận xét thống kê\n")
@@ -61,7 +61,7 @@ def export_report(summary_df, file_name='data/processed/final_report.md'):
             f.write(f"### Nhà máy: {row['factory_id']}\n")
             f.write(f"- Tốc độ đơn hàng trung bình (lambda): {row['lambda_est']} đơn/giờ.\n")
             if 0.9 <= row['dispersion_index'] <= 1.1:
-                f.write("- Trạng thái: Hoạt động chuẩn theo phân phối Poisson.\n")
+                f.write("- Đánh giá: Hoạt động chuẩn theo phân phối Poisson.\n")
             else:
-                f.write("- Trạng thái: Có dấu hiệu biến động bất thường (Overdispersion).\n")
+                f.write("- Đánh giá: Có dấu hiệu biến động bất thường (Overdispersion).\n")
     print(f"--- Đã xuất báo cáo chuyên sâu tại {file_name} ---")

@@ -34,9 +34,11 @@ if __name__ == "__main__":
         
         # Vẽ biểu đồ xu hướng
         print("\n--- Đang vẽ biểu đồ xu hướng... ---")
-        plot_order_trends(hourly_data)
+        plot_order_trends(hourly_data, "Factory_A")
+        plot_order_trends(hourly_data, "Factory_B")
+        plot_order_trends(hourly_data, "Factory_C")
         
-        # Vẽ biểu đồ so sánh phân phối cho Factory_A (để kiểm chứng Poisson)
+        # Vẽ biểu đồ so sánh phân phối cho các Factory (để kiểm chứng Poisson)
         import matplotlib.pyplot as plt
         fig, axs = plt.subplots(1, 3, figsize = (18, 6), sharey = True)
         plot_distribution_comparison(hourly_data, "Factory_A", ax = axs[0])

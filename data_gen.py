@@ -41,10 +41,10 @@ def generate_factory_data(factory_name, lam, start_year = 2016, end_year = 2018,
 # THỰC THI: Tạo 3 nhà máy với đặc tính thống kê khác nhau
 setup_folders()
 # Factory A: Ổn định (5 đơn/giờ)
-generate_factory_data("Factory_A", lam=10)
+generate_factory_data("Factory_A", lam=5)
 
 # Factory B: Bận rộn hơn (12 đơn/giờ)
-generate_factory_data("Factory_B", lam=30)
+generate_factory_data("Factory_B", lam=12)
 
 # Factory C: Có sự biến động (Non-stationary - giả lập bằng cách tăng lambda lên)
-generate_factory_data("Factory_C", lam=60)
+generate_factory_data("Factory_C", lam=30)

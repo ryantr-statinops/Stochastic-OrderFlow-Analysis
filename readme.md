@@ -1,12 +1,12 @@
 
-# Statistical Time Series Analytics (SOFA)
+# Statistical Order Flow Analytics (SOFA)
 
 ## 1. Tổng quan dự án
 
-**Mục tiêu:** sử dụng các phương pháp thông kê cho các loại dữ liệu tuân theo quy luật phân phối Possion, nhằm đơn giản và trực quan hóa được sự khác biệt của số lượng dữ liệu trong mô hình chuỗi Poisson 
-**Quá trình ngẫu nhiên (Stochastic Process)** 
+**Mục tiêu:** sử dụng các phương pháp thống kê để mô tả và phân tích dữ liệu dòng đơn hàng theo **Poisson process** (quá trình ngẫu nhiên), từ đó trực quan hóa sự khác biệt về số đơn theo thời gian và giữa các nhà máy.
 
-**Bối cảnh** Cho mạng lưới gồm 3 nhà máy. Hệ thống tập trung vào việc mô hình hóa sự xuất hiện của đơn hàng để tối ưu hóa năng lực vận hành.
+**Bối cảnh:** hệ thống gồm **n nhà máy** (mặc định `n = 3`). Số lượng và tham số sinh dữ liệu có thể tinh chỉnh tại `data_gen.py`. Mục tiêu là mô hình hóa việc xuất hiện ngẫu nhiên của đơn hàng theo **đơn/giờ**, sau đó so sánh sự khác biệt giữa các nhà máy với số  **đơn/giờ** khác nhau dựa trên thống kê của chuỗi thời gian.
+
 
 ---
 
@@ -14,7 +14,8 @@
 
 ### A. Data Modeling (Thiết kế dữ liệu)
 
-Thay vì các file Excel rời rạc, dự án xây dựng cấu trúc dữ liệu theo hướng chuỗi thời gian (**Time-series**):
+Thay vì sử dụng các dữ liệu mẫu có sẵn, dự án xây dựng `data_gen.py` để tự động tạo dữ liệu cho các nhà máy nhằm tối ưu hiệu suất và tăng tính linh động khi người dùng muốn kiểm tra sự khác nhau giữa các bộ dữ liệu tương đồng nhưng có số lượng/đặc tính khác nhau.
+
 
 * **Dữ liệu nguồn:** 3 file CSV riêng biệt cho 3 nhà máy (Factory A, B, C).
 * **Biến số chính:** `timestamp` (thời điểm đơn hàng đến), `order_id`, và `factory_id`.
@@ -36,21 +37,28 @@ Các phương pháp phân tích trong dự án sử dụng gồm:
   - **Histogram so sánh phân phối** cho từng nhà máy.
 
 
-### C. DA-Ops (Vận hành & Kỹ thuật)
+### C. Vận hành & Kỹ thuật
 * **Tổng quan phương pháp triển khai:** Sử dụng Python làm môi trường giao tiếp chính cùng các thư viện chuyên môn để tối ưu hệ sinh thái của Python trong phân tích dữ liệu
 
 * **Cấu trúc Module:** Phân tách mã nguồn thành các folder/file chức năng riêng biệt: `data_gen.py`, `data_loader.py`, `stats_engine.py`.
 * **Tính linh hoạt:** Hệ thống cho phép tùy chọn khoảng thời gian phân tích (ví dụ: 2016-2018), tinh chỉnh dữ liệu(thay đổi giá trị lamda) và lựa chọn số lượng nhà máy thông qua cấu hình tập trung tại `main`.
 
 Code ví dụ:
+
+```python
+generate_factory_data(factory_name="name", lam=x)
 ```
-generate_factory_data("name", lam=x) 
-```
+
 Trong đó:
-"name"(string): là tên nhà máy
-x = $lamda (số đơn hàng trung bình trong 1 giờ )
-lưu ý: Giá trị $lamda tuân theo quy luật phân phối chuẩn với giá trị x là số lượng đơn hàng trung bình trong 1 giờ khác với quy luật phân phối Poisson là chuỗi các sự kiện xảy ra liên tục theo thời gian
+- `factory_name` (str): tên nhà máy.
+- `x` / `lam` (float): **tốc độ trung bình** λ = số đơn hàng kỳ vọng **trong 1 giờ**.
+
+Ghi chú:
+- `lam` là tham số điều khiển cường độ của quá trình Poisson (tạo số đơn/giờ từ phân phối Poisson).
+- Dữ liệu sinh ra là các **sự kiện rời rạc theo thời gian** (`timestamp`) và sau đó được **gom theo giờ** để phân tích chuỗi `order_count`.
+
 ---
+
 
 ## 3. Cấu trúc thư mục dự án
 
@@ -80,11 +88,11 @@ project_stochastic/
 
 ---
 
-## 4. Kế hoạch hành động (Step-by-Step)
+## 4. hướng dẫn triển khai (Step-by-Step)
 
-1. **Bước 1:** Chạy `data_gen.py` để tạo dữ liệu giả lập Poisson cho giai đoạn 2016 - 2018.
-2. **Bước 2:** Xây dựng `data_loader.py` để hợp nhất dữ liệu từ các nhà máy và lọc theo thời gian yêu cầu.
-3. **Bước 3:** Thực hiện **Gom nhóm (Aggregation)** theo giờ để xác định biến ngẫu nhiên .
-4. **Bước 4:** Trực quan hóa và thực hiện các kiểm định thống kê để so sánh hiệu suất nhà máy.
+1. **Bước 1:** Kích hoạt môi trường ảo tại terminal `.venv\Scripts\Activate.ps1`
+2. **Bước 2:** Chạy `data_gen.py` để tạo dữ liệu giả lập Poisson cho giai đoạn 2016 - 2018.
+3. **Bước 3:** chạy `main.py` để chạy toàn bộ dự án hoặc tinh chỉnh các thông số tại dự án
+4. **Bước 4:** Xem kết quả đã được trực quan hóa và các kiểm định thống kê để so sánh hiệu suất nhà máy tại `final_report.md`.
 
 ---

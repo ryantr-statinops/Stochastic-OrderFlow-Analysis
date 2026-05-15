@@ -38,10 +38,22 @@ Các phương pháp phân tích trong dự án sử dụng gồm:
 
 
 ### C. Vận hành & Kỹ thuật
-* **Tổng quan phương pháp triển khai:** Sử dụng Python làm môi trường giao tiếp chính cùng các thư viện chuyên môn để tối ưu hệ sinh thái của Python trong phân tích dữ liệu
 
-* **Cấu trúc Module:** Phân tách mã nguồn thành các folder/file chức năng riêng biệt: `data_gen.py`, `data_loader.py`, `stats_engine.py`.
-* **Tính linh hoạt:** Hệ thống cho phép tùy chọn khoảng thời gian phân tích (ví dụ: 2016-2018), tinh chỉnh dữ liệu(thay đổi giá trị lamda) và lựa chọn số lượng nhà máy thông qua cấu hình tập trung tại `main`.
+* **Tổng quan công nghệ (tech stack):**
+  - **Python**: điều phối pipeline chạy toàn bộ quá trình tạo dữ liệu → nạp dữ liệu → thống kê → trực quan hóa.
+  - **pandas**: đọc/ghép CSV, xử lý `timestamp`, group theo thời gian (hourly aggregation).
+  - **numpy**: sinh dữ liệu giả lập theo phân phối **Poisson** trong `data_gen.py` và hỗ trợ tính toán.
+  - **scipy**: thực hiện kiểm định thống kê (Poisson goodness-of-fit bằng **Chi-square**).
+  - **matplotlib** + **seaborn**: vẽ biểu đồ xu hướng và histogram so sánh phân phối trong `src/visualizer.py`.
+
+* **Cấu trúc module:** Phân tách mã nguồn thành các file/chức năng riêng biệt:
+  - `data_gen.py`: tạo dữ liệu giả lập (Poisson events) và ghi ra `data/raw/*.csv`.
+  - `src/data_loader.py`: tải CSV, lọc theo khoảng năm, sau đó chuyển sang dạng theo giờ (`order_count`).
+  - `src/stats_engine.py`: tính thống kê (mean/variance/std, dispersion index) và xuất báo cáo Markdown.
+  - `src/visualizer.py`: vẽ rolling mean và histogram phân phối.
+
+* **Tính linh hoạt:** Hệ thống cho phép tùy chọn khoảng thời gian phân tích (ví dụ: 2016-2018), tinh chỉnh tham số `lam` (thay đổi tốc độ đơn/giờ) và so sánh nhiều nhà máy thông qua cấu hình chạy ở `main.py`.
+
 
 Code ví dụ:
 

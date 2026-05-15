@@ -1,5 +1,5 @@
 
-# Statistical Order Flow Analytics (SOFA)
+# Statistical Analytics for Poisson Process Time Series Data
 
 ## 1. Tổng quan dự án
 

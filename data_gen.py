@@ -14,7 +14,7 @@ def setup_folders():
             print(f"--- Đã tạo thư mục: {folder} ---")
 
 def generate_factory_data(factory_name, lam, start_year = 2016, end_year = 2018,):
-    date_range = pd.date_range(start =f'{start_year}-01-01', end = f'{end_year}-12-31 23:00:00', freq = 'H')
+    date_range = pd.date_range(start =f'{start_year}-01-01', end = f'{end_year}-12-31 23:00:00', freq = 'h')
 
     orders_count = np.random.poisson(lam, len(date_range))
 
@@ -41,10 +41,10 @@ def generate_factory_data(factory_name, lam, start_year = 2016, end_year = 2018,
 # THỰC THI: Tạo 3 nhà máy với đặc tính thống kê khác nhau
 setup_folders()
 # Factory A: Ổn định (5 đơn/giờ)
-generate_factory_data("Factory_A", lam=50)
+generate_factory_data("Factory_A", lam=10)
 
 # Factory B: Bận rộn hơn (12 đơn/giờ)
-generate_factory_data("Factory_B", lam=120)
+generate_factory_data("Factory_B", lam=30)
 
 # Factory C: Có sự biến động (Non-stationary - giả lập bằng cách tăng lambda lên)
-generate_factory_data("Factory_C", lam=80)
+generate_factory_data("Factory_C", lam=60)

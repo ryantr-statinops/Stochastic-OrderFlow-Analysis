@@ -39,7 +39,7 @@ Các phương pháp phân tích trong dự án sử dụng gồm:
 
 ### C. Vận hành & Kỹ thuật
 
-* **Tổng quan công nghệ (tech stack):**
+* **Tech Stack:**
   - **Python**: điều phối pipeline chạy toàn bộ quá trình tạo dữ liệu → nạp dữ liệu → thống kê → trực quan hóa.
   - **pandas**: đọc/ghép CSV, xử lý `timestamp`, group theo thời gian (hourly aggregation).
   - **numpy**: sinh dữ liệu giả lập theo phân phối **Poisson** trong `data_gen.py` và hỗ trợ tính toán.
